@@ -6,8 +6,7 @@ on:
 
 jobs:
   build:
-	
-	# Workflow가 실행되는 vm의 OS 지정
+    # Workflow가 실행되는 vm의 OS 지정
     runs-on: ubuntu-latest
     
     # 권한
@@ -16,11 +15,11 @@ jobs:
       packages: write
 
     steps:
-
-	# 1. vm에서 리파지토리를 내려받음
+    
+    # 1. vm에서 리파지토리를 내려받음
     - uses: actions/checkout@v3
-
-	# 2. vm에 jdk를 세팅함
+    
+    # 2. vm에 jdk를 세팅함
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
@@ -28,8 +27,8 @@ jobs:
         distribution: 'temurin' # 배포판
         server-id: github 
         settings-path: ${{ github.workspace }}
-
-	# 3. gradle build 실행
+	
+    # 3. gradle build 실행
     - name: Build with Gradle
       uses: gradle/gradle-build-action@v2.4.2
       with:

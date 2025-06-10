@@ -27,11 +27,13 @@ jobs:
         distribution: 'temurin' # 배포판
         server-id: github 
         settings-path: ${{ github.workspace }}
+
     # 3. gradle build 실행
     - name: Build with Gradle
       uses: gradle/gradle-build-action@v2.4.2
       with:
         arguments: build
+
     # 4. gradle publish 실행
     # USERNAME, TOKEN 환경 변수에 추가
     - name: Publish to GitHub Packages

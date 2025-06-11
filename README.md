@@ -57,5 +57,4 @@ RacketServerBootstrap()
 RacketClientBootstrap()
     .register(MyPacket::class, MyPacketHandler())
     .connect(host = "localhost", port = 8080)
-
 ```

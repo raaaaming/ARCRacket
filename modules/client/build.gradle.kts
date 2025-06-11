@@ -10,4 +10,5 @@ repositories {
 
 dependencies {
     api(libs.netty)
+    api(project(":modules:core"))
 }

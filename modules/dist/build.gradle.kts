@@ -9,6 +9,7 @@ repositories {
 }
 
 dependencies {
+    api(libs.netty)
     api(project(":modules:core"))
     api(project(":modules:client"))
     api(project(":modules:server"))

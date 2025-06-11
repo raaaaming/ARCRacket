@@ -13,7 +13,7 @@ subprojects {
     apply(plugin = "java-library")
     apply(plugin = "maven-publish")
 
-    group = "kr.raming"
+    group = "kr.raming.racket"
     version = "2.0.0"
 
     configure<PublishingExtension> {

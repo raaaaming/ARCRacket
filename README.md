@@ -2,6 +2,7 @@
 
 **ARCRacket**은 **아르카디아(Arcadia)** 스토어 마인크래프트 플러그인에서 사용하기 위해 개발된 **Netty 기반 커스텀 패킷 통신 라이브러리**입니다. `ARCRacket`은 `Racket`이라는 이름을 공유하지만, **[Racket 언어](https://racket-lang.org)** 또는 그 관련 라이브러리와는 **전혀 관계가 없습니다**.
 
+[![Java CI with Gradle](https://github.com/raaaaming/ARCRacket/actions/workflows/gradle.yml/badge.svg?branch=main)](https://github.com/raaaaming/ARCRacket/actions/workflows/gradle.yml)
 ---
 
 ## 🎯 목적

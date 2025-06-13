@@ -7,9 +7,9 @@ import kr.raming.racket.core.packet.Packet
 import kr.raming.racket.core.registry.PacketRegistry
 
 class PacketEncoder : MessageToByteEncoder<Packet>() {
-	override fun encode(ctx: ChannelHandlerContext, msg: Packet, out: ByteBuf) {
-		val id = PacketRegistry.getId(msg)
-		out.writeInt(id)
-		msg.write(out)
-	}
+    override fun encode(ctx: ChannelHandlerContext, msg: Packet, out: ByteBuf) {
+        val id = PacketRegistry.getId(msg)
+        out.writeInt(id)
+        msg.write(out)
+    }
 }

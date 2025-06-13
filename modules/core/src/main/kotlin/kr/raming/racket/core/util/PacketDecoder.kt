@@ -6,10 +6,10 @@ import io.netty.handler.codec.ByteToMessageDecoder
 import kr.raming.racket.core.registry.PacketRegistry
 
 class PacketDecoder : ByteToMessageDecoder() {
-	override fun decode(ctx: ChannelHandlerContext, `in`: ByteBuf, out: MutableList<Any>) {
-		val id = `in`.readInt()
-		val packet = PacketRegistry.create(id) ?: throw IllegalArgumentException("Unknown packet ID: $id")
-		packet.read(`in`)
-		out.add(packet)
-	}
+    override fun decode(ctx: ChannelHandlerContext, `in`: ByteBuf, out: MutableList<Any>) {
+        val id = `in`.readInt()
+        val packet = PacketRegistry.create(id) ?: throw IllegalArgumentException("Unknown packet ID: $id")
+        packet.read(`in`)
+        out.add(packet)
+    }
 }

@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.kotlin.jvm)
+    kotlin("plugin.serialization") version "2.1.20"
 }
 
 repositories {
@@ -10,6 +11,4 @@ repositories {
 
 dependencies {
     api(project(":modules:core"))
-    api(project(":modules:server"))
-    api(project(":modules:client"))
 }

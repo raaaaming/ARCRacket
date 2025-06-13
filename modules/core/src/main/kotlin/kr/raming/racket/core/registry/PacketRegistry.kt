@@ -1,6 +1,8 @@
 package kr.raming.racket.core.registry
 
+import kotlinx.serialization.KSerializer
 import kr.raming.racket.core.packet.Packet
+import kr.raming.racket.core.wrapper.PacketWrapper
 import kotlin.reflect.KClass
 
 object PacketRegistry {

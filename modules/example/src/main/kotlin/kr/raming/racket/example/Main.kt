@@ -1,27 +1,34 @@
 package kr.raming.racket.example
 
-import kr.raming.racket.client.NettyClient
+import kr.raming.racket.core.client.RacketClient
 import kr.raming.racket.core.registry.PacketRegistry
-import kr.raming.racket.server.NettyServer
-
-fun registerPackets() {
-	PacketRegistry.register(1) { EchoPacket() }
-}
+import kr.raming.racket.core.server.RacketServer
 
 fun main() {
-	registerPackets()
+	PacketRegistry.register(1) { ChatPacket() }
+	PacketRegistry.register(2) { Imagepacket() }
 
-	// 서버 실행
-	Thread {
-		val server = NettyServer(port = 8080, handler = EchoServerHandler())
-		server.start()
-	}.start()
+	val server = RacketServer()
+		.port(8080)
+		.register(ChatPacket::class) { ctx, packet ->
+			println(packet.message)
+			ctx.writeAndFlush(ChatPacket("Hello, Client!"))
+		}
+		.register(Imagepacket::class) { ctx, packet ->
+			println("url: ${packet.message}")
+		}
+		.start()
 
-	// 약간 대기 후 클라이언트 실행
-	Thread.sleep(1000)
-	val client = NettyClient("localhost", 8080, EchoClientHandler())
-	client.start()
+	val client = RacketClient()
+		.bind("localhost",8080)
+		.register(ChatPacket::class) { ctx, packet ->
+			println("> ${packet.message}")
+		}
+		.register(Imagepacket::class) { ctx, packet ->
+			println("image: ${packet.message}")
+		}
+		.start()
 
-	Thread.sleep(1000)
-	client.send(EchoPacket("송신 테스트입니다."))
+	client.send(ChatPacket("Hello, Server!"))
+	client.send(Imagepacket("https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"))
 }

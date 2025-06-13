@@ -11,6 +11,10 @@ commons-math3 = { module = "org.apache.commons:commons-math3", version.ref = "co
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter-engine" }
 netty = { module = "io.netty:netty-all", version = "4.2.0.Final" }
+reflections = { module = "org.reflections:reflections", version = "0.10.2" }
+kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.8.1" }
+kotlin-reflection = { module = "org.jetbrains.kotlin:kotlin-reflect", version = "2.1.20" }
+logback = { module = "ch.qos.logback:logback-classic", version = "1.5.13"}
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version = "2.1.0" }

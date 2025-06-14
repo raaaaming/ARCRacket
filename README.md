@@ -3,6 +3,7 @@
 **ARCRacket**은 **아르카디아(Arcadia)** 스토어 마인크래프트 플러그인에서 사용하기 위해 개발된 **Netty 기반 커스텀 패킷 통신 라이브러리**입니다. `ARCRacket`은 `Racket`이라는 이름을 공유하지만, **[Racket 언어](https://racket-lang.org)** 또는 그 관련 라이브러리와는 **전혀 관계가 없습니다**.
 
 [![Java CI with Gradle](https://github.com/raaaaming/ARCRacket/actions/workflows/gradle.yml/badge.svg?branch=main)](https://github.com/raaaaming/ARCRacket/actions/workflows/gradle.yml)
+[![Gradle Package](https://github.com/raaaaming/ARCRacket/actions/workflows/gradle-publish.yml/badge.svg)](https://github.com/raaaaming/ARCRacket/actions/workflows/gradle-publish.yml)
 ---
 
 ## 🎯 목적
@@ -13,17 +14,23 @@
 
 ---
 
-## 📦 프로젝트 구조
-
-ARCRacket은 **멀티 모듈 구조**로 구성되어 있습니다:
+## 📦 프로젝트 의존성 추가
 
 ```
-arcracket/
-├── core # 공통 패킷 처리 및 Netty 통신 로직
-├── fabric # Fabric 클라이언트/서버 전용 구현
-└── bukkit # Bukkit 서버 전용 구현
-```
+repositories {
+  maven {
+    url = uri("https://maven.pkg.github.com/raaaaming/ARCRacket")
+    credentials {
+      username = System.getenv("USERNAME")
+      password = System.getenv("TOKEN")
+    }
+  }
+}
 
+dependencies {
+  implementation("kr.raming:core:2.1.0")
+}
+```
 
 ---
 
@@ -44,18 +51,48 @@ arcracket/
 
 ---
 
-## 🔧 예시 (초기화 코드)
+## 🔧 예시
+
+```kotlin
+class MyPacket(override var message: String = "") : Packet()
+class SecondPacket(override var message: String = "") : Packet()
+class TestPacket(override var message: String = "") : Packet()
+```
+
+```kotlin
+PacketRegistry
+    .register(1) { MyPacket }
+    .register(2) { SecondPacket }
+```
 
 ```kotlin
 // 서버 측 초기화
-RacketServerBootstrap()
-    .register(MyPacket::class, MyPacketHandler())
-    .bind(port = 8080)
+val server = RacketServer()
+    .register(MyPacket::class) {
+        //클라이언트 -> 서버 패킷 처리 로직
+    }
+    .register(SecondPacket::class) {
+        //클라이언트 -> 서버 패킷 처리 로직
+    }
+    .port(port = 8080)
+    .start()
 ```
 
 ```kotlin
 // 클라이언트 측 초기화
-RacketClientBootstrap()
-    .register(MyPacket::class, MyPacketHandler())
-    .connect(host = "localhost", port = 8080)
+val client = RacketClient()
+    .register(MyPacket::class) {
+        //서버 -> 클라이언트 패킷 처리 로직
+    }
+    .register(SecondPacket::class) {
+        //서버 -> 클라이언트 패킷 처리 로직
+    }
+    .bind(host = "localhost", port = 8080)
+    .start()
+```
+
+```kotlin
+client.send(MyPacket("Hi! 1"))
+client.send(SecondPacket("Hi! 2"))
+client.send(TestPacket("Hi! 3")) //전송 불가
 ```

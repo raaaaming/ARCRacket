@@ -9,9 +9,10 @@ object PacketRegistry {
 	private val idToSupplier = mutableMapOf<Int, () -> Packet>()
 	private val classToId = mutableMapOf<KClass<out Packet>, Int>()
 
-	fun register(id: Int, supplier: () -> Packet) {
+	fun register(id: Int, supplier: () -> Packet) : PacketRegistry {
 		idToSupplier[id] = supplier
 		classToId[supplier().javaClass.kotlin] = id
+		return this
 	}
 
 	fun create(id: Int): Packet? = idToSupplier[id]?.invoke()
